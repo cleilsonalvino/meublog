@@ -74,8 +74,7 @@
         })
 // Rotas
         app.get("/", (req, res)=>{
-            Postagem.find().populate("categoria").sort({data: "desc"}).then((postagens)=>{
-                res.render("index", {postagens: postagens})
+                res.render("index")
             }).catch((err)=>{
                 console.log(err)
                 req.flash("error_msg", "Houve um erro interno")
