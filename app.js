@@ -60,7 +60,7 @@
         app.use(bodyParser.json())
     //Mongoose
         mongoose.Promise = global.Promise;
-        mongoose.connect("mongodb+srv://cleilsonalvino:Cleil-db20@meublog.pzmnmjj.mongodb.net/").then(()=>{
+        mongoose.connect("mongodb+srv://cleilsonalvino:Cleil-db20@blogapp.gl3vo0c.mongodb.net/").then(()=>{
             console.log("Conectado ao MongoDB!")
         }).catch((err)=>{
             console.log(`Falha ao se conectar ao mongodb: ${err}`)
