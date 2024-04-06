@@ -1,0 +1,35 @@
+{{#each postagens}}
+<div class="notification mt-4">
+    <div class="notiglow"></div>
+    <div class="notiborderglow"></div>
+    <div class="notititle"></div>
+
+
+    <div class="notibody">
+        <h1>{{categoria.slug}}</h1>
+
+
+        <h3>{{titulo}}</h3>
+        <p>{{descricao}}</p>
+        <hr>
+        <small>Data da postagem: {{data}}</small>
+        <br>
+        <a href="/postagens/{{slug}}"><button class="btn btn-success mt-3">Leia mais</button></a>
+    </div>
+</div>
+
+
+  {{else}}
+
+  <div class="notification mt-4">
+    <div class="notiglow"></div>
+    <div class="notiborderglow"></div>
+    <div class="notititle"></div>
+
+
+    <div class="notibody">
+    <h5>Nenhuma postagem</h5>
+    </div>
+</div>
+    
+{{/each}}

@@ -1,0 +1,32 @@
+<div class="jumbotron text-white">
+  <h1 class="display-4">Bem vindo ao Blog do NodeJS</h1>
+  <p class="lead">Este é um blog simpres, feito com Node.JS + express + mongoDB</p>
+  <hr class="my-4">
+  <p>Aqui você irá ver as novidades no mundo da progamação</p>
+  <p>Criado por <a href="https://github.com/cleilsonalvino" target="_blank">Cleilson Alvino</a></p>
+  {{#if user}}
+  {{else}}
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="/usuarios/registro" role="button">Crie uma conta</a>
+  </p>
+  {{/if}}
+</div>
+
+<h2>Postagens recentes: </h2>
+
+{{#each postagens}}
+<div class="notification mt-4">
+    <div class="notiglow"></div>
+    <div class="notiborderglow"></div>
+    <div class="notititle"></div>
+    <div class="notibody">
+        <a href="/postagens/{{slug}}" style="text-decoration: underline;"><h1>{{titulo}}</h1></a>
+        <p>{{descricao}}</p>
+        <hr>
+        <small>Categoria: {{categoria.slug}}</small>
+    </div>
+  </div>
+  
+{{else}}
+    <h5>Nenhuma postagem</h5>
+{{/each}}
