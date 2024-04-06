@@ -100,7 +100,7 @@
         })
 
         app.get("/404", (req, res)=>{
-            res.send("erro 404!")
+            res.send("erro 40!")
         })
 
         app.get("/categorias", (req, res)=>{
