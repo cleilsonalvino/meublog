@@ -73,13 +73,7 @@
             next()
         })
 // Rotas
-        app.get("/", (req, res)=>{
-                res.render("index")
-            }).catch((err)=>{
-                console.log(err)
-                req.flash("error_msg", "Houve um erro interno")
-                res.redirect("/404")
-            })
+        app.get("/", (req, res)=>{res.render("index")})
 
         app.get("/postagens/:slug", (req, res)=>{
             Postagem.findOne({slug: req.params.slug}).lean().then((postagens)=>{
