@@ -80,8 +80,6 @@
                 req.flash("error_msg", "Houve um erro interno")
                 res.redirect("/404")
             })
-            
-        })
 
         app.get("/postagens/:slug", (req, res)=>{
             Postagem.findOne({slug: req.params.slug}).lean().then((postagens)=>{
