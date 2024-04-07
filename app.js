@@ -74,7 +74,7 @@
         })
 // Rotas
         app.get("/", (req, res)=>{
-            Postagem.find({}).lean().populate("categoria").sort({data: "desc"}).then((postagens)=>{
+            Postagem.find({}).maxTimeMS(10000).lean().populate("categoria").sort({data: "desc"}).then((postagens)=>{
                 res.render("index", {postagens: postagens})
             }).catch((err)=>{
                 console.log(err)
