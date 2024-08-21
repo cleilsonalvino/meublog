@@ -18,10 +18,9 @@
     const Usuario = require("./routes/usuario.js")
     const passport = require('passport')
     require("./config/auth.js")(passport)
-    import * as dotenv from 'dotenv';
-    dotenv.config();
+    require('dotenv').config();
 
-    const mongoURI = process.env.PASS;
+    const mongoURI = process.env.MONGO_DB;
 
     
     
