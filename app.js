@@ -17,6 +17,7 @@
     const Categoria = mongoose.model("categorias");
     const Usuario = require("./routes/usuario.js")
     const passport = require('passport')
+    import MongoStore from 'connect-mongo';
     require("./config/auth.js")(passport)
     require('dotenv').config();
 
@@ -27,9 +28,11 @@
 //Configurações
     //Sessao
         app.use(session({
-            secret: "cursodenode",
-            resave: true,
-            saveUninitialized: true
+            store: MongoStore.create({ mongoUrl: mongoURI }),
+            secret: process.env.SESSION_SECRET,
+            resave: false,
+            saveUninitialized: false,
+            cookie: { secure: true } 
         }))
 
         app.use(passport.initialize())
