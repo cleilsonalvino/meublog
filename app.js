@@ -60,7 +60,7 @@
         app.use(bodyParser.json())
     //Mongoose
         mongoose.Promise = global.Promise;
-        mongoose.connect(mongoURI{serverSelectionTimeoutMS: 30000})
+        mongoose.connect(mongoURI, {serverSelectionTimeoutMS: 30000})
         .then(() => {
             console.log('Conectado ao MongoDB com sucesso!');
         })
