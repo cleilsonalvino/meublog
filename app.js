@@ -18,9 +18,10 @@
     const Usuario = require("./routes/usuario.js")
     const passport = require('passport')
     require("./config/auth.js")(passport)
+    import * as dotenv from 'dotenv';
+    dotenv.config();
 
-
-
+    const mongoURI = process.env.PASS;
 
     
     
@@ -60,11 +61,13 @@
         app.use(bodyParser.json())
     //Mongoose
         mongoose.Promise = global.Promise;
-        mongoose.connect("mongodb+srv://cleilsonalvino:Cleil-db20@blogapp.gl3vo0c.mongodb.net/").then(()=>{
-            console.log("Conectado ao MongoDB!")
-        }).catch((err)=>{
-            console.log(`Falha ao se conectar ao mongodb: ${err}`)
+        mongoose.connect(mongoURI)
+        .then(() => {
+            console.log('Conectado ao MongoDB com sucesso!');
         })
+        .catch((err) => {
+            console.error('Erro ao conectar ao MongoDB:', err);
+        });
     //
     //Public
         app.use(express.static(path.join(__dirname, "public")))
@@ -74,7 +77,7 @@
         })
 // Rotas
         app.get("/", (req, res)=>{
-            Postagem.find({}).maxTimeMS(50000).lean().populate("categoria").sort({data: "desc"}).then((postagens)=>{
+            Postagem.find().lean().populate("categoria").sort({data: "desc"}).then((postagens)=>{
                 res.render("index", {postagens: postagens})
             }).catch((err)=>{
                 console.log(err)
@@ -100,7 +103,7 @@
         })
 
         app.get("/404", (req, res)=>{
-            res.send("erro 40!")
+            res.send("erro 404!")
         })
 
         app.get("/categorias", (req, res)=>{
