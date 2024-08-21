@@ -17,7 +17,7 @@
     const Categoria = mongoose.model("categorias");
     const Usuario = require("./routes/usuario.js")
     const passport = require('passport')
-    import MongoStore from 'connect-mongo';
+    const MongoStore = require('connect-mongo');
     require("./config/auth.js")(passport)
     require('dotenv').config();
 
