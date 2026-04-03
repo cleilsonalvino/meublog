@@ -11,19 +11,23 @@ const Usuario = mongoose.model("Usuario")
 module.exports = function(passport){
 
     passport.use(new LocalStrategy({usernameField: "email", passwordField: "senha"}, (email, senha, done)=>{
-        Usuario.findOne({email: email}).then((usuario)=>{
-            if(!usuario){
-                return done(null, false, {message: "Esta conta não existe!"})
-            }
-
-            bcrypt.compare(senha, usuario.senha, (erro, batem)=>{
-                if(batem){
-                    return done(null, usuario)
-                }else{
-                    return done(null, false, {message: "Senha incorreta"})
+        Usuario.findOne({email: email})
+            .then((usuario)=>{
+                if(!usuario){
+                    return done(null, false, {message: "Esta conta não existe!"})
                 }
+
+                bcrypt.compare(senha, usuario.senha, (erro, batem)=>{
+                    if(erro){
+                        return done(erro)
+                    }
+                    if(batem){
+                        return done(null, usuario)
+                    }
+                    return done(null, false, {message: "Senha incorreta"})
+                })
             })
-        })
+            .catch((err) => done(err))
     }))
 
     passport.serializeUser((usuario, done)=>{
@@ -32,13 +36,18 @@ module.exports = function(passport){
 
     passport.deserializeUser((id, done) => {
         Usuario.findById(id)
-            .then(usuario => {
-                done(null, usuario);
+            .select("-senha")
+            .lean()
+            .then((usuario) => {
+                if (!usuario) {
+                    return done(null, false)
+                }
+                done(null, usuario)
             })
-            .catch(err => {
-                done(err, null);
-            });
-    });
+            .catch((err) => {
+                done(err, null)
+            })
+    })
     
 
 }

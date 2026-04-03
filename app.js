@@ -16,6 +16,7 @@
     require("./models/Categoria.js")
     const Categoria = mongoose.model("categorias");
     const Usuario = require("./routes/usuario.js")
+    const { userIsAdmin } = require("./helpers/eAdmin.js")
     const passport = require('passport')
     const MongoStore = require('connect-mongo');
     require("./config/auth.js")(passport)
@@ -32,7 +33,12 @@
             secret: process.env.SESSION_SECRET,
             resave: false,
             saveUninitialized: false,
-            cookie: { secure: true } 
+            cookie: {
+                secure: process.env.NODE_ENV === 'production',
+                httpOnly: true,
+                sameSite: 'lax',
+                maxAge: 1000 * 60 * 60 * 24 * 7
+            }
         }))
 
         app.use(passport.initialize())
@@ -45,6 +51,7 @@
             res.locals.error_msg = req.flash("error_msg")
             res.locals.error = req.flash("error")
             res.locals.user = req.user || null
+            res.locals.isAdmin = userIsAdmin(req.user)
             next()
         })
     //Handlebars
