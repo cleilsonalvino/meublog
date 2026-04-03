@@ -3,6 +3,10 @@
     const { engine } = require('express-handlebars')
     const bodyParser = require('body-parser')
     const app = express();
+
+    if (process.env.VERCEL || process.env.NODE_ENV === "production") {
+        app.set("trust proxy", 1)
+    }
     const admin = require('./routes/admin.js')
     const path = require('path')
     const { fileURLToPath } = require('url')
@@ -57,7 +61,7 @@
     //Handlebars
         app.engine('handlebars', engine());
         app.set('view engine', 'handlebars');
-        app.set('views', './views');
+        app.set('views', path.join(__dirname, 'views'));
         const hbs = handlebars.create({
             runtimeOptions: {
                 allowProtoPropertiesByDefault: true,
@@ -147,9 +151,11 @@
         app.use("/usuarios", Usuario)
 // Outros
         const port = process.env.PORT || 8000;
-        app.listen(port, () => {
-          console.log(`Servidor rodando na port ${port}`);
-        });
+        if (!process.env.VERCEL) {
+            app.listen(port, () => {
+                console.log(`Servidor rodando na port ${port}`);
+            });
+        }
 
+        module.exports = app;
 
-        
